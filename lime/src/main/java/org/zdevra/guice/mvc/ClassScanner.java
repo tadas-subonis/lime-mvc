@@ -78,9 +78,9 @@ class ClassScanner {
                 }
 
                 if (reqMappingData != null) {
-                    reqMappingData.injector = injector;
-                    reqMappingData.controllerClass = controllerClass;
-                    reqMappingData.method = method;
+                    reqMappingData.setInjector(injector);
+                    reqMappingData.setControllerClass(controllerClass);
+                    reqMappingData.setMethod(method);
 
                     //create the invoker
                     MethodInvoker invoker = MethodInvokerImpl.createInvoker(reqMappingData);
@@ -121,22 +121,22 @@ class ClassScanner {
 
         Model resultName = method.getAnnotation(Model.class);
         if (resultName != null) {
-            reqMapping.resultName = resultName.value();
+            reqMapping.setResultName(resultName.value());
         }
 
         //resolve HTTP method
         if (method.getAnnotation(GET.class) != null) {
-            reqMapping.httpMethodType = HttpMethodType.GET;
+            reqMapping.setHttpMethodType(HttpMethodType.GET);
         } else if (method.getAnnotation(POST.class) != null) {
-            reqMapping.httpMethodType = HttpMethodType.POST;
+            reqMapping.setHttpMethodType(HttpMethodType.POST);
         } else if (method.getAnnotation(PUT.class) != null) {
-            reqMapping.httpMethodType = HttpMethodType.PUT;
+            reqMapping.setHttpMethodType(HttpMethodType.PUT);
         } else if (method.getAnnotation(DELETE.class) != null) {
-            reqMapping.httpMethodType = HttpMethodType.DELETE;
+            reqMapping.setHttpMethodType(HttpMethodType.DELETE);
         } else if (method.getAnnotation(HEAD.class) != null) {
-            reqMapping.httpMethodType = HttpMethodType.HEAD;
+            reqMapping.setHttpMethodType(HttpMethodType.HEAD);
         } else {
-            reqMapping.httpMethodType = HttpMethodType.ALL;
+            reqMapping.setHttpMethodType(HttpMethodType.ALL);
         }
 
         return reqMapping;

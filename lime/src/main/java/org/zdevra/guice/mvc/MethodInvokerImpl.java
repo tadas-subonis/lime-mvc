@@ -49,25 +49,25 @@ class MethodInvokerImpl implements MethodInvoker {
 
     /*---------------------------- constructors ----------------------------*/
     public static MethodInvoker createInvoker(MappingData reqMapping) {
-        ParamProcessorsService paramService = reqMapping.injector.getInstance(ParamProcessorsService.class);
-        ConversionService convertService = reqMapping.injector.getInstance(ConversionService.class);
-        ViewScannerService viewScannerService = reqMapping.injector.getInstance(ViewScannerService.class);
+        ParamProcessorsService paramService = reqMapping.getInjector().getInstance(ParamProcessorsService.class);
+        ConversionService convertService = reqMapping.getInjector().getInstance(ConversionService.class);
+        ViewScannerService viewScannerService = reqMapping.getInjector().getInstance(ViewScannerService.class);
 
-        ViewPoint defaultView = viewScannerService.scan(reqMapping.method.getAnnotations());
+        ViewPoint defaultView = viewScannerService.scan(reqMapping.getMethod().getAnnotations());
         if (defaultView == ViewPoint.NULL_VIEW) {
-            defaultView = viewScannerService.scan(reqMapping.controllerClass.getAnnotations());
+            defaultView = viewScannerService.scan(reqMapping.getControllerClass().getAnnotations());
         }
 
-        List<ParamProcessor> processors = scanParams(reqMapping.method, paramService, convertService);
-        String resultName = reqMapping.resultName;
+        List<ParamProcessor> processors = scanParams(reqMapping.getMethod(), paramService, convertService);
+        String resultName = reqMapping.getResultName();
 
-        Priority priorityAnnotation = reqMapping.method.getAnnotation(Priority.class);
+        Priority priorityAnnotation = reqMapping.getMethod().getAnnotation(Priority.class);
         int priority = Priority.DEFAULT;
         if (priorityAnnotation != null) {
             priority = priorityAnnotation.value();
         }
 
-        MethodInvoker invoker = new MethodInvokerImpl(reqMapping.controllerClass, reqMapping.method, defaultView, resultName, processors, priority);
+        MethodInvoker invoker = new MethodInvokerImpl(reqMapping.getControllerClass(), reqMapping.getMethod(), defaultView, resultName, processors, priority);
         return invoker;
     }
 

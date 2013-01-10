@@ -23,12 +23,12 @@ import com.google.inject.Injector;
 class MappingData {
 
 // ------------------------------------------------------------------------
-    public HttpMethodType httpMethodType;
-    public String path;
-    public String resultName;
-    public Injector injector;
-    public Class<?> controllerClass;
-    public Method method;
+    private HttpMethodType httpMethodType;
+    private String path;
+    private String resultName;
+    private Injector injector;
+    private Class<?> controllerClass;
+    private Method method;
 
 // ------------------------------------------------------------------------
     public MappingData(Class<?> controllerClass, Method method, HttpMethodType httpMethodType, String path, String resultName, Injector injector) {
@@ -40,4 +40,48 @@ class MappingData {
         this.injector = injector;
     }
 // ------------------------------------------------------------------------
+
+    public HttpMethodType getHttpMethodType() {
+        return httpMethodType;
+    }
+
+    public void setHttpMethodType(HttpMethodType httpMethodType) {
+        this.httpMethodType = httpMethodType;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getResultName() {
+        return resultName;
+    }
+
+    public void setResultName(String resultName) {
+        this.resultName = resultName;
+    }
+
+    public Injector getInjector() {
+        return injector;
+    }
+
+    public void setInjector(Injector injector) {
+        this.injector = injector;
+    }
+
+    public Class<?> getControllerClass() {
+        return controllerClass;
+    }
+
+    public void setControllerClass(Class<?> controllerClass) {
+        this.controllerClass = controllerClass;
+    }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    public void setMethod(Method method) {
+        this.method = method;
+    }
 }

@@ -21,11 +21,11 @@ class SecurityMethodInvoker extends MethodInvokerDecorator {
 
     public SecurityMethodInvoker(MappingData reqMappingData, MethodInvoker filteredInvoker) {
         super(filteredInvoker);
-        requireRoleMethod = reqMappingData.method.getAnnotation(RequireRole.class);
-        requireAuthenticatedMethod = reqMappingData.method.getAnnotation(RequireAuthenticated.class);
-        requireRole = reqMappingData.controllerClass.getAnnotation(RequireRole.class);
-        requireAuthenticated = reqMappingData.controllerClass.getAnnotation(RequireAuthenticated.class);
-        webPrincipalProvider = reqMappingData.injector.getInstance(WebPrincipalProvider.class);
+        requireRoleMethod = reqMappingData.getMethod().getAnnotation(RequireRole.class);
+        requireAuthenticatedMethod = reqMappingData.getMethod().getAnnotation(RequireAuthenticated.class);
+        requireRole = reqMappingData.getControllerClass().getAnnotation(RequireRole.class);
+        requireAuthenticated = reqMappingData.getControllerClass().getAnnotation(RequireAuthenticated.class);
+        webPrincipalProvider = reqMappingData.getInjector().getInstance(WebPrincipalProvider.class);
     }
 
     @Override

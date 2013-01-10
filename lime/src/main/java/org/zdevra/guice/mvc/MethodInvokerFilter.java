@@ -37,8 +37,8 @@ class MethodInvokerFilter extends MethodInvokerDecorator {
      */
     public MethodInvokerFilter(MappingData mapping, MethodInvoker decoratedInvoker) {
         super(decoratedInvoker);
-        this.pathPattern = Pattern.compile("(?i)" + mapping.path + "$");
-        this.requestTypeFilter = mapping.httpMethodType;
+        this.pathPattern = Pattern.compile("(?i)" + mapping.getPath() + "$");
+        this.requestTypeFilter = mapping.getHttpMethodType();
     }
 
     @Override
