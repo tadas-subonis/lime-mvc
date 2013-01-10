@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.zdevra.guice.mvc.exceptions.NoMethodInvoked;
 
 import com.google.inject.Injector;
+import org.zdevra.guice.mvc.security.WebPrincipalProvider;
 
 /**
  * The Core Dispatcher servlet forward a request to the concrete 
@@ -44,6 +45,8 @@ class MvcDispatcherServlet extends HttpServlet {
 
 // ------------------------------------------------------------------------
     private static final Logger logger = Logger.getLogger(MvcDispatcherServlet.class.getName());
+    @Inject
+    private WebPrincipalProvider webPrincipalProvider;
     @Inject
     private Injector injector;
     @Inject
@@ -66,6 +69,7 @@ class MvcDispatcherServlet extends HttpServlet {
     public MvcDispatcherServlet(Class<?> controllerClass, Injector injector) {
         this(controllerClass);
         this.injector = injector;
+        this.webPrincipalProvider = injector.getInstance(WebPrincipalProvider.class);
         this.viewResolver = injector.getInstance(ViewResolver.class);
         this.exceptionResolver = injector.getInstance(ExceptionResolver.class);
         this.interceptorService = injector.getInstance(InterceptorService.class);
@@ -79,6 +83,7 @@ class MvcDispatcherServlet extends HttpServlet {
     public MvcDispatcherServlet(Class<?>[] controllers, Injector injector) {
         this(controllers);
         this.injector = injector;
+        this.webPrincipalProvider = injector.getInstance(WebPrincipalProvider.class);
         this.viewResolver = injector.getInstance(ViewResolver.class);
         this.exceptionResolver = injector.getInstance(ExceptionResolver.class);
         this.interceptorService = injector.getInstance(InterceptorService.class);
@@ -172,13 +177,7 @@ class MvcDispatcherServlet extends HttpServlet {
             }
 
             //prepare invoke data & do preprocessing
-            data =
-                    new InvokeData(
-                    req,
-                    resp,
-                    null,
-                    reqType,
-                    injector);
+            data = new InvokeData(req, resp, null, reqType, webPrincipalProvider.get(), injector);
 
             boolean res = interceptorChain.preHandle(data.getRequest(), data.getResponse());
             if (!res) {

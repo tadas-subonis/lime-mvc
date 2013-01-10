@@ -43,7 +43,7 @@ public class InterceptorService {
     }
 
     /*------------------------------- methods ------------------------------*/
-    public InterceptorChain getGlobalInterceptorChain() {
+    InterceptorChain getGlobalInterceptorChain() {
         return new InterceptorChain(globalHandlers);
     }
     /*----------------------------------------------------------------------*/

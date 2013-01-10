@@ -49,6 +49,11 @@ import org.zdevra.guice.mvc.views.RedirectViewScanner;
 
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
+import org.zdevra.guice.mvc.security.ResourceDeniedException;
+import org.zdevra.guice.mvc.security.WebPrincipalProvider;
+import org.zdevra.guice.mvc.security.internal.DefaultWebPrincipalProvider;
+import org.zdevra.guice.mvc.security.internal.ResourceDeniedExceptionHandler;
+import org.zdevra.guice.mvc.security.internal.WebPrincipalFilter;
 
 /**
  * <i>MVC module</i> for GUICE. 
@@ -185,6 +190,9 @@ public abstract class MvcModule extends ServletModule {
 
         try {
             //default registrations
+            filter("/*").through(WebPrincipalFilter.class);
+            bind(WebPrincipalProvider.class).to(DefaultWebPrincipalProvider.class);
+            bindException(ResourceDeniedException.class).toHandler(ResourceDeniedExceptionHandler.class);
             bind(ViewResolver.class).to(DefaultViewResolver.class);
 
             bind(ExceptionResolver.class)
@@ -224,7 +232,7 @@ public abstract class MvcModule extends ServletModule {
 
             //register MVC controllers
             List<ServletDefinition> defs = controllerModuleBuilder.getControllerDefinitions();
-            if (defs.size() == 0) {
+            if (defs.isEmpty()) {
                 logger.log(Level.WARNING, "None controller has been defined in the MVC module");
             }
 

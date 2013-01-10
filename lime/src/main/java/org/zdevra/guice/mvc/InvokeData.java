@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Injector;
+import org.zdevra.guice.mvc.security.WebPrincipal;
 
 /**
  * The class collects all data which may be important for 
@@ -35,15 +36,17 @@ public class InvokeData {
     private final HttpServletResponse response;
     private final ModelMap model;
     private final HttpMethodType reqType;
+    private final WebPrincipal userPrincipal;
     private final Injector injector;
 
     /*---------------------------- constructors ----------------------------*/
-    public InvokeData(HttpServletRequest request, HttpServletResponse response, ModelMap model, HttpMethodType reqType, Injector injector) {
+    public InvokeData(HttpServletRequest request, HttpServletResponse response, ModelMap model, HttpMethodType reqType, WebPrincipal userPrincipal, Injector injector) {
         this.request = request;
         this.response = response;
         this.model = model;
         this.reqType = reqType;
         this.injector = injector;
+        this.userPrincipal = userPrincipal;
         this.uriMatcher = null;
     }
 
@@ -53,6 +56,7 @@ public class InvokeData {
         this.response = copy.response;
         this.model = copy.model;
         this.reqType = copy.reqType;
+        this.userPrincipal = copy.userPrincipal;
         this.injector = copy.injector;
     }
 
@@ -62,6 +66,7 @@ public class InvokeData {
         this.request = copy.request;
         this.response = copy.response;
         this.reqType = copy.reqType;
+        this.userPrincipal = copy.userPrincipal;
         this.injector = copy.injector;
     }
 

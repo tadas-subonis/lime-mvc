@@ -87,7 +87,8 @@ class ClassScanner {
 
                     //at the end is filter decorator
                     MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMappingData, invoker);
-                    scannedInvokers.add(filteredInvoker);
+                    MethodInvoker securityInvoker = new SecurityMethodInvoker(reqMappingData, filteredInvoker);
+                    scannedInvokers.add(securityInvoker);
                 }
             }
 
