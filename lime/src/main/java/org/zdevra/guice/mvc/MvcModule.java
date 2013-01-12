@@ -203,6 +203,7 @@ public abstract class MvcModule extends ServletModule {
             registerParameterProc(SessionAttributeParam.Factory.class);
             registerParameterProc(ModelParam.Factory.class);
             registerParameterProc(RequestParam.Factory.class);
+            registerParameterProc(WebPrincipalParam.Factory.class);
             registerParameterProc(ResponseParam.Factory.class);
             registerParameterProc(HttpSessionParam.Factory.class);
             registerParameterProc(InjectorParam.Factory.class);

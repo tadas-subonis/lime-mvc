@@ -1,9 +1,5 @@
 package org.zdevra.guice.mvc;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
@@ -13,14 +9,18 @@ import org.mortbay.jetty.webapp.WebAppContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 /**
  * This test class provide testing on integration level where the tested
- * code is running under embedded jetty and requests are executed via 
+ * code is running under embedded jetty and requests are executed via
  * commons HttpClient
- * 
  */
 public abstract class WebTest {
-
+    private static final Logger LOGGER = Logger.getLogger(WebTest.class.getName());
     //------------------------------------------------------------------------------------
     // m. variables
     //------------------------------------------------------------------------------------
@@ -32,6 +32,7 @@ public abstract class WebTest {
     //------------------------------------------------------------------------------------
     // inner classes & structures
     //------------------------------------------------------------------------------------
+
     /**
      * Simple structure represents the webapp
      */
@@ -102,10 +103,20 @@ public abstract class WebTest {
         return out;
     }
 
-    public HttpMethod doRequest(String url) throws HttpException, IOException {
+    public HttpMethod doRequest(String url) throws IOException {
+        LOGGER.info("Starting request: " + url);
         HttpMethod req = new GetMethod(url);
         req.setFollowRedirects(false);
         client.executeMethod(req);
+        return req;
+    }
+
+    public HttpMethod doNewClientRequest(String url) throws IOException {
+        LOGGER.info("Starting request: " + url);
+        HttpClient newClient = new HttpClient();
+        HttpMethod req = new GetMethod(url);
+        req.setFollowRedirects(false);
+        newClient.executeMethod(req);
         return req;
     }
 }

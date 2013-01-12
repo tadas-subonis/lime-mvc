@@ -29,23 +29,6 @@ public class AuthSecurityController {
         return "value1";
     }
 
-
-    @Path("/invalidate")
-    @RedirectView("/")
-    public void invalidate(HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-        session.setAttribute("USER", null);
-    }
-
-    @Path("/authenticate")
-    @View("/views/main.html.jsp")
-    public void authenticate(HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-        WebPrincipal webPrincipal = new MockWebPrincipal();
-        session.setAttribute("USER", webPrincipal);
-    }
-
-
     @Path("/errorPage")
     @Model("param1")
     @View("/views/main.html.jsp")

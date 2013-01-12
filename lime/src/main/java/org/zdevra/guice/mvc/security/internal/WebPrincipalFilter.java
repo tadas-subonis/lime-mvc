@@ -30,7 +30,7 @@ public class WebPrincipalFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest hsr = (HttpServletRequest) request;
-        HttpServletRequestWrapper principalRequest = new HttpServletRequestWrapper(hsr);
+        HttpServletRequestWrapper principalRequest = new LocalHttpServletRequestWrapper(hsr);
         chain.doFilter(principalRequest, response);
     }
 

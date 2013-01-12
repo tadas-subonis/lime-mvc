@@ -134,5 +134,11 @@
             <version>6.1H.22</version>
             <scope>test</scope>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.mortbay.jetty</groupId>-->
+            <!--<artifactId>jsp-api-2.1</artifactId>-->
+            <!--<version>6.1H.14</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
     </dependencies>
 </project>

@@ -1,4 +1,4 @@
-package org.zdevra.guice.mvc.securityAuth;
+package org.zdevra.guice.mvc.security.webprincipal;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -15,12 +15,25 @@ public class SecurityContextListener extends GuiceServletContextListener {
         return Guice.createInjector(new MvcModule() {
             @Override
             protected void configureControllers() {
+                control("/secure/*").withController(WebPrincipalController.class);
                 control("/auth/*").withController(AuthController.class);
-                control("/securityAuth/*").withController(AuthSecurityController.class);
-                bind(SecurityConfig.class).to(MockBasicSecurityConfig.class);
+                bind(SecurityConfig.class).to(BasicSecurityConfig.class);
                 registerWebPrincipalProvider(MockSessionWebPrincipalProvider.class);
             }
         });
+    }
+
+    static class BasicSecurityConfig implements SecurityConfig {
+
+        @Override
+        public String getLoginUrl(String originalRequestUrl) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String getAccessDeniedUrl() {
+            return "/secure/errorPage";
+        }
     }
 
 }
