@@ -21,6 +21,9 @@ public class DefaultFinalWebPrincipalProvider implements FinalWebPrincipalProvid
     public WebPrincipal get() {
         WebPrincipal webPrincipal = null;
         for (WebPrincipalProvider provider : webPrincipalProviders) {
+            if (provider.get() == null) {
+                continue;
+            }
             webPrincipal = provider.get();
             if (webPrincipal.isAuthenticated()) {
                 return webPrincipal;
