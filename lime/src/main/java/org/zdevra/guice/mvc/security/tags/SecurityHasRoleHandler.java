@@ -1,5 +1,7 @@
 package org.zdevra.guice.mvc.security.tags;
 
+import org.zdevra.guice.mvc.security.WebPrincipal;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -12,9 +14,9 @@ import java.util.Arrays;
 /**
  * @author Tadas
  */
-public class SecurityUserHandler extends BodyTagSupport {
+public class SecurityHasRoleHandler extends BodyTagSupport {
 
-    private String[] users;
+    private String[] roles;
 
     private boolean hasValidUser() {
 
@@ -25,9 +27,20 @@ public class SecurityUserHandler extends BodyTagSupport {
             return false;
         }
 
+        if (!(userPrincipal instanceof WebPrincipal)) {
+            return false;
+        }
 
-        if (Arrays.binarySearch(users, userPrincipal.getName()) >= 0) {
-            return true;
+        WebPrincipal user = (WebPrincipal) userPrincipal;
+
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            return false;
+        }
+
+        for (String role : user.getRoles()) {
+            if (Arrays.binarySearch(roles, role) >= 0) {
+                return true;
+            }
         }
 
 
@@ -70,16 +83,16 @@ public class SecurityUserHandler extends BodyTagSupport {
 
     }
 
-    public void setUsers(String users) {
+    public void setRoles(String roles) {
 
-        if (users == null || users.isEmpty()) {
+        if (roles == null || roles.isEmpty()) {
             throw new IllegalArgumentException("Names cannot be empty");
         }
 
-        String[] split = users.split(",");
+        String[] split = roles.split(",");
 
         Arrays.sort(split);
 
-        this.users = split;
+        this.roles = split;
     }
 }

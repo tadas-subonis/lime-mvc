@@ -3,20 +3,11 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
     <tlib-version>1.0</tlib-version>
     <short-name>sec</short-name>
-    <uri>/WEB-INF/tlds/security.tld</uri>
-    <!-- A validator verifies that the tags are used correctly at JSP
-           translation time. Validator entries look like this:
-        <validator>
-            <validator-class>com.mycompany.TagLibValidator</validator-class>
-            <init-param>
-               <param-name>parameter</param-name>
-               <param-value>value</param-value>
-        </init-param>
-        </validator>
-     -->
+    <uri>/WEB-INF/security.tld</uri>
+    <!-- When making modification please be aware that there is separate tld for website tests - please update it too (overwrite) -->
     <tag>
-        <name>role</name>
-        <tag-class>org.zdevra.guice.mvc.security.tags.SecurityRoleHandler</tag-class>
+        <name>hasRole</name>
+        <tag-class>org.zdevra.guice.mvc.security.tags.SecurityHasRoleHandler</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>roles</name>
@@ -26,8 +17,8 @@
         </attribute>
     </tag>
     <tag>
-        <name>user</name>
-        <tag-class>org.zdevra.guice.mvc.security.tags.SecurityUserHandler</tag-class>
+        <name>isUser</name>
+        <tag-class>org.zdevra.guice.mvc.security.tags.SecurityIsUserHandler</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>users</name>
