@@ -1,8 +1,9 @@
 package org.zdevra.guice.mvc.security.internal;
 
+import org.zdevra.guice.mvc.security.WebPrincipal;
+
 import java.util.Collections;
 import java.util.Set;
-import org.zdevra.guice.mvc.security.WebPrincipal;
 
 /**
  *

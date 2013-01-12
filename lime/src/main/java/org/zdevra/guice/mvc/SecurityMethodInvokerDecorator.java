@@ -2,34 +2,34 @@ package org.zdevra.guice.mvc;
 
 import org.zdevra.guice.mvc.security.ResourceDeniedException;
 import org.zdevra.guice.mvc.security.WebPrincipal;
-import org.zdevra.guice.mvc.security.WebPrincipalProvider;
 import org.zdevra.guice.mvc.security.annotations.RequireAuthenticated;
 import org.zdevra.guice.mvc.security.annotations.RequireRole;
+import org.zdevra.guice.mvc.security.internal.FinalWebPrincipalProvider;
 
 /**
- *
  * @author Tadas Subonis <tadas.subonis@gmail.com>
  */
-class SecurityMethodInvoker extends MethodInvokerDecorator {
+class SecurityMethodInvokerDecorator extends MethodInvokerDecorator {
 
-    private final SecurityHandler securityHandler = new SecurityHandler();
-    private final WebPrincipalProvider webPrincipalProvider;
     private RequireAuthenticated requireAuthenticated;
     private RequireRole requireRole;
     private RequireAuthenticated requireAuthenticatedMethod;
     private RequireRole requireRoleMethod;
+    private final FinalWebPrincipalProvider webPrincipalProvider;
 
-    public SecurityMethodInvoker(MappingData reqMappingData, MethodInvoker filteredInvoker) {
+    public SecurityMethodInvokerDecorator(MappingData reqMappingData, MethodInvoker filteredInvoker) {
         super(filteredInvoker);
         requireRoleMethod = reqMappingData.getMethod().getAnnotation(RequireRole.class);
         requireAuthenticatedMethod = reqMappingData.getMethod().getAnnotation(RequireAuthenticated.class);
         requireRole = reqMappingData.getControllerClass().getAnnotation(RequireRole.class);
         requireAuthenticated = reqMappingData.getControllerClass().getAnnotation(RequireAuthenticated.class);
-        webPrincipalProvider = reqMappingData.getInjector().getInstance(WebPrincipalProvider.class);
+        webPrincipalProvider = reqMappingData.getInjector().getInstance(FinalWebPrincipalProvider.class);
     }
 
     @Override
     public ModelAndView invoke(InvokeData data) {
+
+        SecurityHandler securityHandler = new SecurityHandler(webPrincipalProvider.get());
         securityHandler.handle(requireAuthenticated);
         securityHandler.handle(requireRole);
         securityHandler.handle(requireAuthenticatedMethod);
@@ -39,8 +39,10 @@ class SecurityMethodInvoker extends MethodInvokerDecorator {
     }
 
     private class SecurityHandler {
+        private final WebPrincipal webPrincipal;
 
-        public SecurityHandler() {
+        public SecurityHandler(WebPrincipal webPrincipal) {
+            this.webPrincipal = webPrincipal;
         }
 
         public void handle(RequireAuthenticated requireAuthenticated) {
@@ -48,7 +50,6 @@ class SecurityMethodInvoker extends MethodInvokerDecorator {
                 return;
             }
 
-            WebPrincipal webPrincipal = webPrincipalProvider.get();
             if (!webPrincipal.isAuthenticated()) {
                 throw new ResourceDeniedException();
             }
@@ -59,7 +60,6 @@ class SecurityMethodInvoker extends MethodInvokerDecorator {
                 return;
             }
 
-            WebPrincipal webPrincipal = webPrincipalProvider.get();
             for (String role : requireRole.value()) {
                 if (webPrincipal.getRoles().contains(role)) {
                     return;

@@ -2,12 +2,13 @@ package org.zdevra.guice.mvc.security.internal;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import java.io.IOException;
+import org.zdevra.guice.mvc.ExceptionHandler;
+import org.zdevra.guice.mvc.security.SecurityConfig;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.zdevra.guice.mvc.ExceptionHandler;
-import org.zdevra.guice.mvc.security.SecurityConfig;
+import java.io.IOException;
 
 /**
  *

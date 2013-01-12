@@ -84,7 +84,7 @@ public class ModelMap implements Map<String, Object> {
      * @param name
      * @param obj
      */
-    public void addObject(String name, Object obj) {
+    public final void addObject(String name, Object obj) {
         this.modelObjects.put(name, obj);
     }
 

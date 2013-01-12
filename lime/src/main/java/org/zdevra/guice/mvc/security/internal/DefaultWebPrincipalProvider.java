@@ -1,11 +1,11 @@
 package org.zdevra.guice.mvc.security.internal;
 
-import com.google.inject.Singleton;
 import org.zdevra.guice.mvc.security.WebPrincipal;
 import org.zdevra.guice.mvc.security.WebPrincipalProvider;
 
+import javax.inject.Singleton;
+
 /**
- *
  * @author Tadas Subonis <tadas.subonis@gmail.com>
  */
 @Singleton

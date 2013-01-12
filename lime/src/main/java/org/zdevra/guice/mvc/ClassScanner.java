@@ -86,9 +86,9 @@ class ClassScanner {
                     MethodInvoker invoker = MethodInvokerImpl.createInvoker(reqMappingData);
 
                     //at the end is filter decorator
-                    MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMappingData, invoker);
-                    MethodInvoker securityInvoker = new SecurityMethodInvoker(reqMappingData, filteredInvoker);
-                    scannedInvokers.add(securityInvoker);
+                    MethodInvoker securityInvoker = new SecurityMethodInvokerDecorator(reqMappingData, invoker);
+                    MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMappingData, securityInvoker);
+                    scannedInvokers.add(filteredInvoker);
                 }
             }
 
