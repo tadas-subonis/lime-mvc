@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+    <tlib-version>1.0</tlib-version>
+    <short-name>sec</short-name>
+    <uri>/WEB-INF/tlds/security.tld</uri>
+    <!-- A validator verifies that the tags are used correctly at JSP
+           translation time. Validator entries look like this:
+        <validator>
+            <validator-class>com.mycompany.TagLibValidator</validator-class>
+            <init-param>
+               <param-name>parameter</param-name>
+               <param-value>value</param-value>
+        </init-param>
+        </validator>
+     -->
+    <tag>
+        <name>role</name>
+        <tag-class>org.zdevra.guice.mvc.security.tags.SecurityRoleHandler</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>roles</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <name>user</name>
+        <tag-class>org.zdevra.guice.mvc.security.tags.SecurityUserHandler</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>users</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <name>isAuthenticated</name>
+        <tag-class>org.zdevra.guice.mvc.security.tags.SecurityIsAuthenticatedHandler</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+    <tag>
+        <name>notAuthenticated</name>
+        <tag-class>org.zdevra.guice.mvc.security.tags.SecurityNotAuthenticatedHandler</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
+</taglib>
