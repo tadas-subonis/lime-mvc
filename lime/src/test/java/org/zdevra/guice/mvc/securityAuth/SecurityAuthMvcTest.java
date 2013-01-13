@@ -33,7 +33,7 @@ public class SecurityAuthMvcTest extends WebTest {
     @Test
     public void shouldDenyBeforeLoginAndAllowAfter() throws HttpException, IOException {
         HttpMethod method = doRequest("http://localhost:9191/auth/invalidate");
-        method = doRequest("http://localhost:9191/securityAuth/requireAuthenticated");
+        method = doRequest("http://localhost:9191/secure/requireAuthenticated");
 
         int code = method.getStatusCode();
         Header location = method.getResponseHeader("Location");
@@ -41,21 +41,21 @@ public class SecurityAuthMvcTest extends WebTest {
         System.out.println("code:" + code);
         System.out.println("location:" + location.getValue());
         Assert.assertEquals(code, 302);
-        Assert.assertEquals(location.getValue(), "http://localhost:9191/securityAuth/errorPage");
+        Assert.assertEquals(location.getValue(), "http://localhost:9191/secure/errorPage");
 
         method = doRequest("http://localhost:9191/auth/authenticate");
 
-        method = doRequest("http://localhost:9191/securityAuth/requireAuthenticated");
+        method = doRequest("http://localhost:9191/secure/requireAuthenticated");
         code = method.getStatusCode();
         Assert.assertEquals(code, 200);
-        Assert.assertEquals(method.getPath(), "/securityAuth/requireAuthenticated");
+        Assert.assertEquals(method.getPath(), "/secure/requireAuthenticated");
         System.out.println("code:" + code);
     }
 
     @Test
     public void shouldDenyBeforeLoginAndAllowAfterWithRoles() throws HttpException, IOException {
         HttpMethod method = doRequest("http://localhost:9191/auth/invalidate");
-        method = doRequest("http://localhost:9191/securityAuth/requireRole");
+        method = doRequest("http://localhost:9191/secure/requireRole");
 
         int code = method.getStatusCode();
         Header location = method.getResponseHeader("Location");
@@ -63,14 +63,14 @@ public class SecurityAuthMvcTest extends WebTest {
         System.out.println("code:" + code);
         System.out.println("location:" + location.getValue());
         Assert.assertEquals(code, 302);
-        Assert.assertEquals(location.getValue(), "http://localhost:9191/securityAuth/errorPage");
+        Assert.assertEquals(location.getValue(), "http://localhost:9191/secure/errorPage");
 
         method = doRequest("http://localhost:9191/auth/authenticate");
 
-        method = doRequest("http://localhost:9191/securityAuth/requireRole");
+        method = doRequest("http://localhost:9191/secure/requireRole");
         code = method.getStatusCode();
         Assert.assertEquals(code, 200);
-        Assert.assertEquals(method.getPath(), "/securityAuth/requireRole");
+        Assert.assertEquals(method.getPath(), "/secure/requireRole");
         System.out.println("code:" + code);
     }
 
@@ -81,17 +81,17 @@ public class SecurityAuthMvcTest extends WebTest {
         HttpMethod method = doRequest("http://localhost:9191/auth/invalidate");
         method = doRequest("http://localhost:9191/auth/authenticate");
 
-        method = doRequest("http://localhost:9191/securityAuth/requireRole");
+        method = doRequest("http://localhost:9191/secure/requireRole");
         code = method.getStatusCode();
         Assert.assertEquals(code, 200);
-        Assert.assertEquals(method.getPath(), "/securityAuth/requireRole");
+        Assert.assertEquals(method.getPath(), "/secure/requireRole");
         System.out.println("code:" + code);
 
-        method = doNewClientRequest("http://localhost:9191/securityAuth/requireRole");
+        method = doNewClientRequest("http://localhost:9191/secure/requireRole");
         code = method.getStatusCode();
         Assert.assertEquals(code, HttpServletResponse.SC_MOVED_TEMPORARILY);
         Header location = method.getResponseHeader("Location");
-        Assert.assertEquals(location.getValue(), "http://localhost:9191/securityAuth/errorPage");
+        Assert.assertEquals(location.getValue(), "http://localhost:9191/secure/errorPage");
 
     }
 

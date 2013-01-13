@@ -8,6 +8,8 @@ import org.zdevra.guice.mvc.security.AuthController;
 import org.zdevra.guice.mvc.security.MockSessionWebPrincipalProvider;
 import org.zdevra.guice.mvc.security.SecurityConfig;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class SecurityContextListener extends GuiceServletContextListener {
 
     @Override
@@ -26,7 +28,7 @@ public class SecurityContextListener extends GuiceServletContextListener {
     static class BasicSecurityConfig implements SecurityConfig {
 
         @Override
-        public String getLoginUrl(String originalRequestUrl) {
+        public String getLoginUrl(HttpServletRequest request) {
             throw new UnsupportedOperationException();
         }
 

@@ -31,7 +31,7 @@ public class SecurityBasicAllowMvcTest extends WebTest {
     //------------------------------------------------------------------------------------
     @Test
     public void shouldAllowAccessForAuthorized() throws HttpException, IOException {
-        HttpMethod method = doRequest("http://localhost:9191/securityAllow/requireAuthenticated");
+        HttpMethod method = doRequest("http://localhost:9191/secure/requireAuthenticated");
 
         int code = method.getStatusCode();
         String path = method.getPath();
@@ -40,12 +40,12 @@ public class SecurityBasicAllowMvcTest extends WebTest {
         System.out.println("code:" + code);
 
         Assert.assertEquals(code, 200);
-        Assert.assertEquals(path, "/securityAllow/requireAuthenticated");
+        Assert.assertEquals(path, "/secure/requireAuthenticated");
     }
 
     @Test
     public void shouldAllowAccessByRole() throws HttpException, IOException {
-        HttpMethod method = doRequest("http://localhost:9191/securityAllow/requireRole");
+        HttpMethod method = doRequest("http://localhost:9191/secure/requireRole");
 
         int code = method.getStatusCode();
         String path = method.getPath();
@@ -53,12 +53,12 @@ public class SecurityBasicAllowMvcTest extends WebTest {
         System.out.println("response:" + method.getResponseBodyAsString());
         System.out.println("code:" + code);
         Assert.assertEquals(code, 200);
-        Assert.assertEquals(path, "/securityAllow/requireRole");
+        Assert.assertEquals(path, "/secure/requireRole");
     }
 
     @Test
     public void shouldNotAllowAccessWrongRole() throws HttpException, IOException {
-        HttpMethod method = doRequest("http://localhost:9191/securityAllow/denyRole");
+        HttpMethod method = doRequest("http://localhost:9191/secure/denyRole");
 
         int code = method.getStatusCode();
         String path = method.getPath();
@@ -67,7 +67,7 @@ public class SecurityBasicAllowMvcTest extends WebTest {
         System.out.println("response:" + method.getResponseBodyAsString());
         System.out.println("code:" + code);
         Assert.assertEquals(code, 302);
-        Assert.assertEquals(location.getValue(), "http://localhost:9191/securityAllow/errorPage");
+        Assert.assertEquals(location.getValue(), "http://localhost:9191/secure/errorPage");
     }
 
 }

@@ -22,6 +22,8 @@ import org.zdevra.guice.mvc.TestView;
 import org.zdevra.guice.mvc.security.MockSessionWebPrincipalProvider;
 import org.zdevra.guice.mvc.security.SecurityConfig;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class SecureControllerTestModule extends MvcModule {
 
     @Override
@@ -36,7 +38,7 @@ public class SecureControllerTestModule extends MvcModule {
     private static class BasicSecurityConfig implements SecurityConfig {
 
         @Override
-        public String getLoginUrl(String originalRequestUrl) {
+        public String getLoginUrl(HttpServletRequest request) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 

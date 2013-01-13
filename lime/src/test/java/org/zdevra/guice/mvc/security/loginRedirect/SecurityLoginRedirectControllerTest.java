@@ -1,7 +1,4 @@
-package org.zdevra.guice.mvc.securityBasic;
-
-import java.io.File;
-import java.io.IOException;
+package org.zdevra.guice.mvc.security.loginRedirect;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpException;
@@ -10,7 +7,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.zdevra.guice.mvc.WebTest;
 
-public class SecurityBasicDenyMvcTest extends WebTest {
+import java.io.File;
+import java.io.IOException;
+
+public class SecurityLoginRedirectControllerTest extends WebTest {
 
     //------------------------------------------------------------------------------------
     // setup
@@ -23,36 +23,35 @@ public class SecurityBasicDenyMvcTest extends WebTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        addWebapp("src/test/resources/cases/securityBasic/webapp", "/");
+        addWebapp("src/test/resources/cases/security/loginRedirect/webapp", "/");
     }
 
     //------------------------------------------------------------------------------------
     // tests
     //------------------------------------------------------------------------------------
     @Test
-    public void testRequestAuthenticated() throws HttpException, IOException {
-        HttpMethod method = doRequest("http://localhost:9191/secure/requireAuthenticated");
+    public void shouldRedirectToLoginPageIfLoginRedirectAnnotationIsPresentOnMethod() throws HttpException, IOException {
+        HttpMethod method = doRequest("http://localhost:9191/secureMethod/requireAuthenticated");
 
         int code = method.getStatusCode();
         Header location = method.getResponseHeader("Location");
 
         System.out.println("code:" + code);
-        System.out.println("location:" + location.getValue());
         Assert.assertEquals(code, 302);
-        Assert.assertEquals(location.getValue(), "http://localhost:9191/secure/errorPage");
+        Assert.assertEquals(location.getValue(), "http://localhost:9191/auth/login");
     }
 
     @Test
-    public void testRequiredRole() throws HttpException, IOException {
-        HttpMethod method = doRequest("http://localhost:9191/secure/requireRole");
+    public void shouldRedirectToLoginPageIfLoginRedirectAnnotationIsPresentOnController() throws HttpException, IOException {
+        HttpMethod method = doRequest("http://localhost:9191/secureController/requireAuthenticated");
 
         int code = method.getStatusCode();
         Header location = method.getResponseHeader("Location");
 
         System.out.println("code:" + code);
-        System.out.println("location:" + location.getValue());
         Assert.assertEquals(code, 302);
-        Assert.assertEquals(location.getValue(), "http://localhost:9191/secure/errorPage");
+        Assert.assertEquals(location.getValue(), "http://localhost:9191/auth/login");
     }
+
 
 }

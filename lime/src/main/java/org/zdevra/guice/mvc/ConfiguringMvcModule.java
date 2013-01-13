@@ -4,6 +4,7 @@ import com.google.inject.name.Names;
 import org.zdevra.guice.mvc.converters.*;
 import org.zdevra.guice.mvc.parameters.*;
 import org.zdevra.guice.mvc.security.ResourceDeniedException;
+import org.zdevra.guice.mvc.security.ResourceLoginException;
 import org.zdevra.guice.mvc.security.WebPrincipalProvider;
 import org.zdevra.guice.mvc.security.internal.*;
 import org.zdevra.guice.mvc.views.NamedViewScanner;
@@ -33,6 +34,7 @@ class ConfiguringMvcModule extends AbstractMvcModule {
             bind(FinalWebPrincipalProvider.class).to(DefaultFinalWebPrincipalProvider.class);
             filter("/*").through(WebPrincipalFilter.class);
             bindException(ResourceDeniedException.class).toHandler(ResourceDeniedExceptionHandler.class);
+            bindException(ResourceLoginException.class).toHandler(ResourceLoginExceptionHandler.class);
 
             //default registrations
             bind(ViewResolver.class).to(DefaultViewResolver.class);

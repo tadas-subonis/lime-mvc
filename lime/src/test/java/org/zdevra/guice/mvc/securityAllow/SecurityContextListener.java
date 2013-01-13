@@ -4,10 +4,9 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import org.zdevra.guice.mvc.MvcModule;
-import org.zdevra.guice.mvc.security.MockWebPrincipal;
-import org.zdevra.guice.mvc.security.SecurityConfig;
-import org.zdevra.guice.mvc.security.WebPrincipal;
-import org.zdevra.guice.mvc.security.WebPrincipalProvider;
+import org.zdevra.guice.mvc.security.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class SecurityContextListener extends GuiceServletContextListener {
 
@@ -16,8 +15,8 @@ public class SecurityContextListener extends GuiceServletContextListener {
         return Guice.createInjector(new MvcModule() {
             @Override
             protected void configureControllers() {
-                control("/securityAllow/*").withController(BasicAllowSecurityController.class);
-                bind(SecurityConfig.class).to(BasicSecurityConfig.class);
+                control("/secure/*").withController(BasicAllowSecurityController.class);
+                bind(SecurityConfig.class).to(MockBasicSecurityConfig.class);
                 registerWebPrincipalProvider(BasicWebPrincipalProvider.class);
             }
         });
@@ -32,17 +31,5 @@ public class SecurityContextListener extends GuiceServletContextListener {
 
     }
 
-    private static class BasicSecurityConfig implements SecurityConfig {
-
-        @Override
-        public String getLoginUrl(String originalRequestUrl) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public String getAccessDeniedUrl() {
-            return "/securityAllow/errorPage";
-        }
-    }
 
 }
