@@ -9,11 +9,6 @@ import org.zdevra.guice.mvc.security.internal.*;
 import org.zdevra.guice.mvc.views.NamedViewScanner;
 import org.zdevra.guice.mvc.views.RedirectViewScanner;
 
-import javax.servlet.http.HttpServlet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Level;
-
 class ConfiguringMvcModule extends AbstractMvcModule {
 
     @Override

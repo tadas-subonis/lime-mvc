@@ -3,7 +3,7 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
     <tlib-version>1.0</tlib-version>
     <short-name>sec</short-name>
-    <uri>/WEB-INF/security.tld</uri>
+    <uri>/META-INF/tags/security.tld</uri>
     <!-- When making modification please be aware that there is separate tld for website tests - please update it too (overwrite) -->
     <tag>
         <name>hasRole</name>

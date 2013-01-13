@@ -1,4 +1,4 @@
-<%@ taglib prefix="sec" uri="/WEB-INF/security.tld" %>
+<%@ taglib prefix="sec" uri="/META-INF/tags/security.tld" %>
 
 <sec:hasRole roles="ADMIN">
     ADMIN
