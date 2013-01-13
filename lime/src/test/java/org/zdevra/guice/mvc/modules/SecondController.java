@@ -14,22 +14,20 @@
  * limitations under the License.
  *
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.modules;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.zdevra.guice.mvc.annotations.*;
 
-public class TestServlet extends MvcDispatcherServlet {
+import javax.inject.Singleton;
 
-    public TestServlet(Class<?>[] controllers, MvcModule... module) {
-        super(controllers, Guice.createInjector(module));
+@Controller(sessionAttributes = {"book"}, view = "default")
+@Singleton
+public class SecondController {
+
+    @Path("/nothing")
+    @RedirectView("/")
+    public void simpleCall() {
     }
 
-    public TestServlet(Class<?> controllerClass, Injector injector) {
-        super(controllerClass, injector);
-    }
 
-    public TestServlet(Class<?> controllerClass, MvcModule... module) {
-        super(controllerClass, Guice.createInjector(module));
-    }
 }

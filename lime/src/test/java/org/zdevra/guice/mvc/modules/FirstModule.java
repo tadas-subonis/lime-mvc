@@ -12,24 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.modules;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.zdevra.guice.mvc.MvcModule;
+import org.zdevra.guice.mvc.TestView;
 
-public class TestServlet extends MvcDispatcherServlet {
+public class FirstModule extends MvcModule {
 
-    public TestServlet(Class<?>[] controllers, MvcModule... module) {
-        super(controllers, Guice.createInjector(module));
-    }
-
-    public TestServlet(Class<?> controllerClass, Injector injector) {
-        super(controllerClass, injector);
-    }
-
-    public TestServlet(Class<?> controllerClass, MvcModule... module) {
-        super(controllerClass, Guice.createInjector(module));
+    @Override
+    protected void configureControllers() {
+        control("/somepath").withView("someview.jsp");
     }
 }
